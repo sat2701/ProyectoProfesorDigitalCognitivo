@@ -1,0 +1,6 @@
+---
+applications:
+- name: ProfesorCognitivoVers1O
+  memory: 512M
+  host: ProfesorCognitivoVers1O
+  domain: mybluemix.net
