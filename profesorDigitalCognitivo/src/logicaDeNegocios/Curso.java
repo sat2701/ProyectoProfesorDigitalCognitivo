@@ -33,7 +33,7 @@ public class Curso {
 	//************************************** GETTERS & SETTERS *****************************************
 	public String getCodigo() {
 		return codigo;
-	}
+	}//Probando Github
 	public void setCodigo(String pCodigo) {
 		this.codigo = pCodigo;
 	}
