@@ -20,11 +20,8 @@ public class Curso {
 	private ArrayList<Tema> temas;
 	private ArrayList<Estudiante> estudiantes;
 	private ArrayList<Evaluacion> evaluaciones;
-<<<<<<< HEAD
-	private String Jose="feo";
-=======
-	private String luis = "rico";
->>>>>>> 0c840ca9bb0191e3bdba59dc6b6046a17165c0aa
+	private String Jose="el más saico";
+	private String luis = "vara seca";
 	//************************************** CONSTRUCTOR *****************************************
 	public Curso(String pCodigo, String pDescripcion){
 		setCodigo(pCodigo);
