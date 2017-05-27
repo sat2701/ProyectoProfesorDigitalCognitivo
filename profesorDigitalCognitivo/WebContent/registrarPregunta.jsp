@@ -46,8 +46,8 @@
 			</tr>
 			
 			<tr>
-			<td><input type="hidden" value=<%=session.getAttribute("DescripcionTema").toString() %> name="DescripcionTema"></td>
-			<td><input type="hidden" value=<%=session.getAttribute("DescripcionSubtema").toString() %> name="DescripcionSubtema"></td>
+			<td><input type="hidden" value="<%=session.getAttribute("DescripcionTema").toString() %>" name="DescripcionTema"></td>
+			<td><input type="hidden" value="<%=session.getAttribute("DescripcionSubtema").toString() %>" name="DescripcionSubtema"></td>
 			<td><input type="submit" value="Registrar" name="guardarPregunta" /></td>
 			</tr>
 		</table>

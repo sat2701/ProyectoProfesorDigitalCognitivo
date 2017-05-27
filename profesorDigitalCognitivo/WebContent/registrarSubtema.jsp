@@ -27,7 +27,7 @@
 					<td><input type="text" placeholder="   descripcion" name="textDescripcionSubtema" /></td>
 				</tr>
 				<tr>
-				<td><input type="hidden" value=<%=session.getAttribute("DescripcionTema").toString() %> name="descripcionTema"></td>
+				<td><input type="hidden" value="<%=session.getAttribute("DescripcionTema").toString() %>" name="descripcionTema"></td>
 				<td><input type="submit" class="btn btn-primary" value="Registrar" name="registrarSub" onClick="alert('Se ha registrado el subtema con éxito')"/></td>
 				</tr>
 			</table>

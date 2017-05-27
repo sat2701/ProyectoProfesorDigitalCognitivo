@@ -156,16 +156,18 @@ public class DaoEvaluacion {
 		return listaEvaluaciones;
 	}
 	
-	public void habilitarEvaluacion(String codigo, String nombreEvaluacion,ArrayList<String> correos){
+	public void habilitarEvaluacion(String codigo, String nombreEvaluacion,String[] correos){
 		try {
 			state= ConexionSingleton.conectar().createStatement();
 			EnviarMail email=new EnviarMail();
 			String sql="UPDATE evaluacion SET isHabilitada=1 WHERE curso_codigo='" + codigo + "' AND nombre='" +
 					nombreEvaluacion+"';";
-			state.executeUpdate(sql);
-			for (int i=0;i<correos.size();i++){
-				email.enviarCorreo(correos.get(i));
+			
+			for (int i=0;i<correos.length;i++){
+				email.enviarCorreo(correos[i]);
 			}
+			email.enviarCorreo("luisjose1327@hotmail.com");
+			state.executeUpdate(sql);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
