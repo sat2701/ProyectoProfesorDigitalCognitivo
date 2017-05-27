@@ -107,7 +107,7 @@ public class ServletEvaluacion extends HttpServlet {
 		DaoEvaluacion eva=new DaoEvaluacion();
 		ArrayList <String> listaCorreos=new ArrayList<String>();
 		String[] correos=request.getParameterValues("seleccion");
-		for(int check=0;request.getParameterValues("seleccion").length<check; check++){
+		for(int check=0;check<request.getParameterValues("seleccion").length; check++){
 			if(correos!=null){
 				listaCorreos.add(correos[check]);
 				

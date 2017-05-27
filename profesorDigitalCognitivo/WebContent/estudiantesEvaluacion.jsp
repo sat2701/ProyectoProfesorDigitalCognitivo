@@ -58,7 +58,7 @@
 									<td><%=estudiante.getNombre() + " " + estudiante.getPrimerApellido() + " " + estudiante.getSegundoApellido() %> </td>
 									<td><%=estudiante.getNumeroCarne() %></td>
 									<td><%=estudiante.getCorreo() %></td>
-									<td><input type="checkbox" NAME="seleccion" VALUE=<%=estudiante.getCorreo()%> CHECKED/></td>
+									<td><input type="checkbox" NAME="seleccion" VALUE="<%=estudiante.getCorreo()%>" CHECKED/></td>
         				</tr>
         				<%
         					}
