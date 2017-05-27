@@ -1,6 +1,8 @@
 package logicaDeNegocios.Controladores;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -103,7 +105,15 @@ public class ServletEvaluacion extends HttpServlet {
 		
 	}else if(request.getParameter("Habilitar")!=null){
 		DaoEvaluacion eva=new DaoEvaluacion();
-		eva.habilitarEvaluacion(request.getParameter("CodigoCursoActual"), request.getParameter("NombreEvaluacionActual"),request.getParameterValues("seleccion"));
+		ArrayList <String> listaCorreos=new ArrayList<String>();
+		String[] correos=request.getParameterValues("seleccion");
+		for(int check=0;request.getParameterValues("seleccion").length<check; check++){
+			if(correos!=null){
+				listaCorreos.add(correos[check]);
+				
+			}
+		}
+		eva.habilitarEvaluacion(request.getParameter("CodigoCursoActual"), request.getParameter("NombreEvaluacionActual"),listaCorreos);
 		response.sendRedirect("EvaluacionesNoHabilitadas.jsp");
 	}
 		
