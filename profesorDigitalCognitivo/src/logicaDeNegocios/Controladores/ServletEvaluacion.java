@@ -21,6 +21,7 @@ import logicaDeNegocios.factory.FabricaCurso;
 import logicaDeNegocios.factory.FabricaEvaluacion;
 import logicaDeNegocios.factory.FabricaEvaluacionFormativa;
 import logicaDeNegocios.factory.FabricaEvaluacionSumativa;
+import serviciosCognitivos.GenerarPDF;
 
 /**
  * Servlet implementation class ServletEvaluacion
@@ -108,6 +109,10 @@ public class ServletEvaluacion extends HttpServlet {
 		String[] correos=request.getParameterValues("seleccion");
 		eva.habilitarEvaluacion(request.getParameter("CodigoCursoActual"), request.getParameter("NombreEvaluacionActual"),correos);
 		response.sendRedirect("EvaluacionesNoHabilitadas.jsp");
+	}
+	else if(request.getParameter("GenerarPDF")!=null){
+		GenerarPDF pdf=new GenerarPDF();
+		pdf.generarPDF(request.getParameter("NombreEvaluacion"), request.getParameter("CodigoCurso"));
 	}
 		
 	}

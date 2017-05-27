@@ -23,5 +23,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mailapi.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/pop3.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/smtp.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/itext-5.0.5.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
