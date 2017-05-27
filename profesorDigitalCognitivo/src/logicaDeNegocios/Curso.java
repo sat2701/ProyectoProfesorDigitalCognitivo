@@ -20,6 +20,7 @@ public class Curso {
 	private ArrayList<Tema> temas;
 	private ArrayList<Estudiante> estudiantes;
 	private ArrayList<Evaluacion> evaluaciones;
+	private String Jose="feo";
 	//************************************** CONSTRUCTOR *****************************************
 	public Curso(String pCodigo, String pDescripcion){
 		setCodigo(pCodigo);
