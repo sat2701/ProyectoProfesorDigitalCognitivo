@@ -33,7 +33,7 @@ import logicaDeNegocios.factory.FabricaCurso;
 import logicaDeNegocios.factory.FabricaEvaluacion;
 import logicaDeNegocios.factory.FabricaEvaluacionFormativa;
 import logicaDeNegocios.factory.FabricaEvaluacionSumativa;
-import serviciosCognitivos.GenerarPDF;
+
 
 /**
  * Servlet implementation class ServletEvaluacion
