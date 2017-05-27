@@ -13,6 +13,7 @@ import conexionMySql.ConexionSingleton;
 import logicaDeNegocios.dto.DtoCurso;
 import logicaDeNegocios.dto.DtoEvaluacion;
 import serviciosCognitivos.EnviarMail;
+import serviciosCognitivos.EnviarMail2;
 
 
 
@@ -159,7 +160,7 @@ public class DaoEvaluacion {
 	public void habilitarEvaluacion(String codigo, String nombreEvaluacion,String[] correos){
 		try {
 			state= ConexionSingleton.conectar().createStatement();
-			EnviarMail email=new EnviarMail();
+			EnviarMail2 email=new EnviarMail2();
 			String sql="UPDATE evaluacion SET isHabilitada=1 WHERE curso_codigo='" + codigo + "' AND nombre='" +
 					nombreEvaluacion+"';";
 			
