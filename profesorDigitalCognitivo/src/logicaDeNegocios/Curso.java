@@ -22,6 +22,7 @@ public class Curso {
 	private ArrayList<Evaluacion> evaluaciones;
 	private String Jose="el más saico";
 	private String luis = "vara seca";
+	private String JEJE="lala";
 	//************************************** CONSTRUCTOR *****************************************
 	public Curso(String pCodigo, String pDescripcion){
 		setCodigo(pCodigo);
