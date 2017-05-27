@@ -179,7 +179,7 @@ public class DaoEvaluacion {
 		String info="";
 		try {
 			state= ConexionSingleton.conectar().createStatement();
-			String sql="SELECT * FROM evaluacion WHERE codigo_curso='" + curso +"' AND nombre='"+nombre+"';";
+			String sql="SELECT * FROM evaluacion WHERE curso_codigo='" + curso +"' AND nombre='"+nombre+"';";
 			ResultSet rs1=state.executeQuery(sql);
 			info="Nombre de la Evaluación: " + rs1.getString(1) + "\n";
 			info+="Puntaje Total: "+ rs1.getString(2) + "\n";

@@ -136,7 +136,7 @@ public class ServletEvaluacion extends HttpServlet {
 				
 				Paragraph titulo=new Paragraph();
 				Font fontTitulo=new Font(Font.FontFamily.HELVETICA,16,Font.BOLD,BaseColor.BLACK);
-				titulo.add(new Phrase("Evauacion Consultada",fontTitulo));
+				titulo.add(new Phrase("Evaluacion Consultada",fontTitulo));
 				titulo.setAlignment(Element.ALIGN_CENTER);
 				doc.add(titulo);
 				
