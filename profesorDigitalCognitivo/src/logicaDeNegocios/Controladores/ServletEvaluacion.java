@@ -142,7 +142,7 @@ public class ServletEvaluacion extends HttpServlet {
 				
 				Paragraph parrafo=new Paragraph();
 				Font fontParrafo=new Font(Font.FontFamily.HELVETICA,16,Font.BOLD,BaseColor.BLACK);
-				parrafo.add(new Phrase(datosEvaluacion.consultarInfoEvaluacion(request.getParameter("NombreEvaluacion"),request.getParameter("CodigoCurso")),fontParrafo));
+				parrafo.add(new Phrase(datosEvaluacion.consultarInfoEvaluacion(request.getParameter("NombreEvaluacion"),request.getParameter("CodigoCursoActual")),fontParrafo));
 				parrafo.setAlignment(Element.ALIGN_CENTER);
 				doc.add(parrafo);
 				
