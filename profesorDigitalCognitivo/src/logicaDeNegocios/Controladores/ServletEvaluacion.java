@@ -1,14 +1,26 @@
 package logicaDeNegocios.Controladores;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.JOptionPane;
+
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.codec.Base64.OutputStream;
 
 import logicaDeNegocios.Curso;
 import logicaDeNegocios.Evaluacion;
@@ -111,11 +123,40 @@ public class ServletEvaluacion extends HttpServlet {
 		response.sendRedirect("EvaluacionesNoHabilitadas.jsp");
 	}
 	else if(request.getParameter("GenerarPDF")!=null){
-		GenerarPDF pdf=new GenerarPDF();
-		pdf.generarPDF(request.getParameter("NombreEvaluacion"), request.getParameter("CodigoCurso"));
+		DaoEvaluacion datosEvaluacion= new DaoEvaluacion();
+		response.setContentType("application/pdf");
+		ServletOutputStream out= response.getOutputStream();
+		try{
+			try{
+				//FileOutputStream archivo = new FileOutputStream(home+"/Downloads/Evaluacion.pdf");
+				//FileOutputStream archivo = new FileOutputStream(home+"/Downloads/Evaluacion.jsp");
+				Document doc= new Document();
+				PdfWriter.getInstance(doc, out);
+				doc.open();
+				
+				Paragraph titulo=new Paragraph();
+				Font fontTitulo=new Font(Font.FontFamily.HELVETICA,16,Font.BOLD,BaseColor.BLACK);
+				titulo.add(new Phrase("Evauacion Consultada",fontTitulo));
+				titulo.setAlignment(Element.ALIGN_CENTER);
+				doc.add(titulo);
+				
+				Paragraph parrafo=new Paragraph();
+				Font fontParrafo=new Font(Font.FontFamily.HELVETICA,16,Font.BOLD,BaseColor.BLACK);
+				parrafo.add(new Phrase(datosEvaluacion.consultarInfoEvaluacion(request.getParameter("NombreEvaluacion"),request.getParameter("CodigoCurso")),fontParrafo));
+				parrafo.setAlignment(Element.ALIGN_CENTER);
+				doc.add(parrafo);
+				
+				doc.close();
+				
+			}catch(Exception e1){
+				e1.getMessage();
+			}
+		}finally{
+			out.close();
+		}
 	}
-		
-	}
+}
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

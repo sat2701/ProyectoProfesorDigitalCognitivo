@@ -36,7 +36,7 @@ String getCodigo = request.getParameter("codigoCurso");
       
       <div class="contenido" ></hr>
       <form action="/ServletEvaluacion" method="get">
-      	<input type="hidden" name="codigoCurso" value="<%=getCodigo%>"/>
+      	<input type="hidden" name="codigoCurso" value="<%=session.getAttribute("IdentificadorCurso").toString()%>"/>
       	<button type="input" class="btn btn-primary" name="ventanaRegistrar">Agregar Evaluación</button>
       	<a href="EvaluacionesHabilitadas.jsp"><button type="button" class="btn btn-primary" name="evaHabilitada">Evaluaciones Habilitadas</button></a>
       	<a href="EvaluacionesNoHabilitadas.jsp"><button type="button" class="btn btn-primary" name="evaDeshabilitada">Evaluaciones Deshabilitadas</button></a>

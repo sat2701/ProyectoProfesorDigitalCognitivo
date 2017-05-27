@@ -16,7 +16,8 @@ public class GenerarPDF {
 	public void generarPDF(String nombreEvaluacion, String CodigoCurso){
 		DaoEvaluacion datosEvaluacion= new DaoEvaluacion();
 		try{
-			FileOutputStream archivo = new FileOutputStream(home+"/Downloads/Evaluacion.pdf");
+			//FileOutputStream archivo = new FileOutputStream(home+"/Downloads/Evaluacion.pdf");
+			FileOutputStream archivo = new FileOutputStream(home+"/Downloads/Evaluacion.jsp");
 			Document doc= new Document();
 			PdfWriter.getInstance(doc, archivo);
 			doc.open();
