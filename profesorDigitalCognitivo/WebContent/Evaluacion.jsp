@@ -36,7 +36,7 @@ String getCodigo = request.getParameter("codigoCurso");
       
       <div class="contenido" ></hr>
       <form action="/ServletEvaluacion" method="get">
-      	<input type="hidden" name="codigoCurso" value="<%=getCodigo%>"/>
+      	<input type="hidden" name="codigoCurso" value="<%=session.getAttribute("IdentificadorCurso").toString()%>"/>
       	<button type="input" class="btn btn-primary" name="ventanaRegistrar">Agregar Evaluación</button>
       	<a href="EvaluacionesHabilitadas.jsp"><button type="button" class="btn btn-primary" name="evaHabilitada">Evaluaciones Habilitadas</button></a>
       	<a href="EvaluacionesNoHabilitadas.jsp"><button type="button" class="btn btn-primary" name="evaDeshabilitada">Evaluaciones Deshabilitadas</button></a>
@@ -53,9 +53,10 @@ String getCodigo = request.getParameter("codigoCurso");
             <tr>
               <th class="col-xs-2">Nombre</th>
               <th class="col-xs-2">Puntaje Total</th>
-              <th class="col-xs-3">Fecha y Hora</th>
-              <th class="col-xs-3">Minutos Disponibles</th>
-              <th class="col-xs-3">Porcentaje Curso</th>
+              <th class="col-xs-2">Fecha y Hora</th>
+              <th class="col-xs-2">Minutos Disponibles</th>
+              <th class="col-xs-2">Porcentaje Curso</th>
+              <th class="col-xs-3">Descargar Evaluacion</th>
             </tr>
           </thead>
           <tbody>   
@@ -68,6 +69,15 @@ String getCodigo = request.getParameter("codigoCurso");
 							<td><%=evaluacion.getHoraFecha() %> </td>
 							<td><%=evaluacion.getMinutosDisponibles() %> </td>
 							<td><%=evaluacion.getPorcentajeCurso() %> </td>
+							<td>
+						<form action="/ServletEvaluacion" method="get" style="height: 43px; ">
+							<input type="hidden" value="<%=evaluacion.getNombreEvaluacion() %>" name="NombreEvaluacion">
+							<input type="hidden" name="CodigoCursoActual" value="<%=session.getAttribute("IdentificadorCurso").toString() %>">
+							<button type="submit" name="GenerarPDF"> <span class="glyphicon glyphicon-save-file"></span></button>
+							
+						</form>
+				</td>	
+							
         				</tr>
         				<%
         					}

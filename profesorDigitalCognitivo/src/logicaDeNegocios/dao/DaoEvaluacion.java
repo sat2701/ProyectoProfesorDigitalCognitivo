@@ -175,5 +175,24 @@ public class DaoEvaluacion {
 		}
 	}
 	
+	public String consultarInfoEvaluacion(String nombre, String curso){
+		String info="";
+		try {
+			state= ConexionSingleton.conectar().createStatement();
+			String sql="SELECT * FROM evaluacion WHERE curso_codigo='" + curso +"' AND nombre='"+nombre+"';";
+			ResultSet rs1=state.executeQuery(sql);
+			info="Nombre de la Evaluación: " + rs1.getString(1) + "\n";
+			info+="Puntaje Total: "+ rs1.getString(2) + "\n";
+			info+="Hora y Fecha: "+ rs1.getString(3) + "\n";
+			info+="Minutos Disponibles: "+ rs1.getString(4) + "\n";
+			info+="Estado: "+ rs1.getString(5) + "\n";
+			info+="Porcentaje del Curso: "+ rs1.getString(6) + "\n";
+			info+="Tipo de Evaluación: "+ rs1.getString(8);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return info;
+	}
 	
 }
