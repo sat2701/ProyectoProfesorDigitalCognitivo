@@ -17,8 +17,11 @@ import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.codec.Base64.OutputStream;
 
@@ -124,28 +127,54 @@ public class ServletEvaluacion extends HttpServlet {
 	}
 	else if(request.getParameter("GenerarPDF")!=null){
 		DaoEvaluacion datosEvaluacion= new DaoEvaluacion();
+		ArrayList<DtoEvaluacion> listaEvaluaciones= new ArrayList<DtoEvaluacion>();
+		listaEvaluaciones= datosEvaluacion.consultarInfoEvaluacion(request.getParameter("NombreEvaluacion"),request.getParameter("CodigoCursoActual"));
 		response.setContentType("application/pdf");
 		ServletOutputStream out= response.getOutputStream();
 		try{
 			try{
-				//FileOutputStream archivo = new FileOutputStream(home+"/Downloads/Evaluacion.pdf");
-				//FileOutputStream archivo = new FileOutputStream(home+"/Downloads/Evaluacion.jsp");
 				Document doc= new Document();
 				PdfWriter.getInstance(doc, out);
 				doc.open();
 				
 				Paragraph titulo=new Paragraph();
 				Font fontTitulo=new Font(Font.FontFamily.HELVETICA,16,Font.BOLD,BaseColor.BLACK);
-				titulo.add(new Phrase("Evaluacion Consultada",fontTitulo));
+				titulo.add(new Phrase("Evaluación" + request.getParameter("NombreEvaluacion") +"",fontTitulo));
 				titulo.setAlignment(Element.ALIGN_CENTER);
 				doc.add(titulo);
 				
-				Paragraph parrafo=new Paragraph();
-				Font fontParrafo=new Font(Font.FontFamily.HELVETICA,16,Font.BOLD,BaseColor.BLACK);
-				parrafo.add(new Phrase(datosEvaluacion.consultarInfoEvaluacion(request.getParameter("NombreEvaluacion"),request.getParameter("CodigoCursoActual")),fontParrafo));
-				parrafo.setAlignment(Element.ALIGN_CENTER);
-				doc.add(parrafo);
+				PdfPTable tabla =new PdfPTable(6);
+				PdfPCell celda1= new PdfPCell(new Paragraph("Nombre",FontFactory.getFont("Arial",12,Font.BOLD,BaseColor.BLACK)));
+				PdfPCell celda2= new PdfPCell(new Paragraph("Puntaje Total",FontFactory.getFont("Arial",12,Font.BOLD,BaseColor.BLACK)));
+				PdfPCell celda3= new PdfPCell(new Paragraph("Hora y Fecha",FontFactory.getFont("Arial",12,Font.BOLD,BaseColor.BLACK)));
+				PdfPCell celda4= new PdfPCell(new Paragraph("Minutos Disponibles",FontFactory.getFont("Arial",12,Font.BOLD,BaseColor.BLACK)));
+				PdfPCell celda5= new PdfPCell(new Paragraph("Estado",FontFactory.getFont("Arial",12,Font.BOLD,BaseColor.BLACK)));
+				PdfPCell celda6= new PdfPCell(new Paragraph("Porcentaje",FontFactory.getFont("Arial",12,Font.BOLD,BaseColor.BLACK)));
+				PdfPCell celda7= new PdfPCell(new Paragraph("Tipo",FontFactory.getFont("Arial",12,Font.BOLD,BaseColor.BLACK)));
 				
+				tabla.addCell(celda1);
+				tabla.addCell(celda2);
+				tabla.addCell(celda3);
+				tabla.addCell(celda4);
+				tabla.addCell(celda5);
+				tabla.addCell(celda6);
+				tabla.addCell(celda7);
+				
+				tabla.addCell(listaEvaluaciones.get(0).getNombreEvaluacion());
+				tabla.addCell(String.valueOf(listaEvaluaciones.get(0).getPuntajeTotal()));
+				tabla.addCell(listaEvaluaciones.get(0).getHoraFecha());
+				tabla.addCell(String.valueOf(listaEvaluaciones.get(0).getMinutosDisponibles()));
+				tabla.addCell(listaEvaluaciones.get(0).getTipo());
+				tabla.addCell(String.valueOf(listaEvaluaciones.get(0).getPorcentajeCurso()));
+				tabla.addCell(listaEvaluaciones.get(0).getTipo());
+				/*
+					Paragraph parrafo=new Paragraph();
+					Font fontParrafo=new Font(Font.FontFamily.HELVETICA,16,Font.BOLD,BaseColor.BLACK);
+					parrafo.add(new Phrase(contenido,fontParrafo));
+					parrafo.setAlignment(Element.ALIGN_CENTER);
+					doc.add(parrafo);
+				
+				*/
 				doc.close();
 				
 			}catch(Exception e1){

@@ -70,7 +70,7 @@ String getCodigo = request.getParameter("codigoCurso");
 							<td><%=evaluacion.getMinutosDisponibles() %> </td>
 							<td><%=evaluacion.getPorcentajeCurso() %> </td>
 							<td>
-						<form action="/ServletEvaluacion" method="get" style="height: 43px; ">
+						<form action="/ServletEvaluacion" method="get">
 							<input type="hidden" value="<%=evaluacion.getNombreEvaluacion() %>" name="NombreEvaluacion">
 							<input type="hidden" name="CodigoCursoActual" value="<%=session.getAttribute("IdentificadorCurso").toString() %>">
 							<button type="submit" name="GenerarPDF"> <span class="glyphicon glyphicon-save-file"></span></button>
