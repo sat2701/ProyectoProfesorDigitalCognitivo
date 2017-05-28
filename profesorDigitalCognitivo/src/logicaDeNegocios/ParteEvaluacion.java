@@ -1,6 +1,9 @@
 package logicaDeNegocios;
 import java.util.ArrayList;
 
+import logicaDeNegocios.dao.DaoEvaluacion;
+import logicaDeNegocios.dao.DaoPregunta;
+
 public class ParteEvaluacion {
 	private String tipoParte;
 	private int puntajeAsignado;

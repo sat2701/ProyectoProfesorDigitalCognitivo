@@ -52,7 +52,7 @@
 				</tr>
 				<tr>
 					<td class="fuenteLetra5">Partes de la evaluación</td>
-					<th><INPUT TYPE="checkbox" name="seleccionUnica" VALUE="seleccionUnica" CHECKED>Seleccion Única<BR>
+					<th><INPUT TYPE="checkbox" name="seleccionUnica" VALUE="seleccionUnica" CHECKED>Selección Única<BR>
 						<INPUT TYPE="checkbox" name="complete" VALUE="complete" CHECKED>Complete<BR>
 						<INPUT TYPE="checkbox" name="desarrollo" VALUE="desarrollo" CHECKED>Desarrollo<BR></th>
 	            	<td><INPUT TYPE="text" placeholder="   puntaje selección única" name="puntosSeleccionUnica"><BR>

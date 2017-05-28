@@ -29,9 +29,16 @@ public class DaoParteEvaluacion {
 		try {
 			state= ConexionSingleton.conectar().createStatement();
 			 		    
-			String sql="SELECT  subtema_tema_descripcion,subtema_descripcion,descripcion,pregunta from preguntaSubtema, "
-				+ "parteEvaluacion,preguntaEvaluacion where descripcion = tipo and evaluacion_curso_codigo ='"+curso+"' and "
-				+ "evaluacion_nombre='"+nombreEvaluacion+"' order by subtema_tema_descripcion,subtema_descripcion,descripcion,pregunta;";
+			String sql= "SELECT  subtema_tema_descripcion,subtema_descripcion,descripcion,pregunta"+ 
+					" from preguntaSubtema join parteEvaluacion join curso_has_tema join preguntaEvaluacion"+
+					" on evaluacion_nombre='"+nombreEvaluacion+"'"+
+					" and subtema_tema_descripcion = tema_descripcion and curso_codigo = '"+curso+"'"+
+					" and pregunta not in (select preguntaSubtema_pregunta from preguntaEvaluacion"+
+					" where parteEvaluacion_evaluacion_nombre = '"+nombreEvaluacion+"'"+
+					" and parteEvaluacion_evaluacion_curso_codigo = '"+curso+"')"+
+					" group by subtema_tema_descripcion,subtema_descripcion,descripcion,pregunta"+
+					" order by subtema_tema_descripcion,subtema_descripcion,descripcion,pregunta;";
+
 			ResultSet rs1=state.executeQuery(sql);
 			while(rs1.next()){ 
 				DtoPregunta pregunta=new DtoPregunta();

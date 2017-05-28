@@ -33,7 +33,7 @@ public class DaoPregunta {
 		try {
 			String sql;
 			state= ConexionSingleton.conectar().createStatement();
-			if(dtoPregunta.getDescripcionPregunta().equals("Selección Única")){
+			if(dtoPregunta.getDescripcionPregunta().equals("Selecciï¿½n ï¿½nica")){
 				sql="DELETE FROM seleccionUnica WHERE pregunta="+dtoPregunta.getPregunta()+" AND descripcion=" +
 						dtoPregunta.getDescripcionPregunta()+";";
 			;
@@ -56,7 +56,7 @@ public class DaoPregunta {
 		try {
 			String sql;
 			state= ConexionSingleton.conectar().createStatement();
-			if(dtoPregunta.getDescripcionPregunta().equals("Selección Única")){
+			if(dtoPregunta.getDescripcionPregunta().equals("Selecciï¿½n ï¿½nica")){
 				sql="UPDATE seleccionUnica SET  pregunta="+dtoPregunta.getPregunta()+", descripcion=" +
 						dtoPregunta.getDescripcionPregunta()+", descripcionAyuda="+dtoPregunta.getDescripcionAyuda()+
 						", respuestaCorrecta="+dtoPregunta.getRespuestaCorrecta()+", subtema="+ dtoPregunta.getSubtema()+";";
@@ -83,7 +83,7 @@ public class DaoPregunta {
 			String sql;
 			try {
 				state= ConexionSingleton.conectar().createStatement();
-				if(pDescripcion.equals("Selección Única")){
+				if(pDescripcion.equals("Selecciï¿½n ï¿½nica")){
 					sql="SELECT * FROM seleccionUnica WHERE pregunta="+ pPregunta +" AND descripcion=" +
 							 pDescripcion+";";
 				;
@@ -138,7 +138,7 @@ public class DaoPregunta {
 		for(int i=0;i<respuestas.size();i++){
 			try {
 				state= ConexionSingleton.conectar().createStatement();
-				String Sql="INSERT INTO respuestaIncorrecta VALUES('"+respuestas.get(i)+"','Selección Única','"+pregunta+"','"+descripcionSubtema+"','"+descripcionTema+"');";
+				String Sql="INSERT INTO respuestaIncorrecta VALUES('"+respuestas.get(i)+"','Selecciï¿½n ï¿½nica','"+pregunta+"','"+descripcionSubtema+"','"+descripcionTema+"');";
 				state.executeUpdate(Sql);
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
@@ -150,8 +150,8 @@ public class DaoPregunta {
 	public void agregarPreguntaEvaluacion(String tema, String subtema,String descripcion, String pPregunta, String evaluacion, String curso){
 		try {
 			state= ConexionSingleton.conectar().createStatement();
-			String Sql="insert into preguntaEvaluacion values('"+descripcion+"','"+pPregunta+"',"
-					+ "'"+subtema+"','"+tema+"', '"+evaluacion+"','"+curso+"');";
+			String Sql="insert into preguntaEvaluacion values('"+descripcion+"','"+pPregunta+"',"+
+			"'"+subtema+"','"+tema+"', '"+evaluacion+"','"+curso+"');";
 			state.executeUpdate(Sql);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block

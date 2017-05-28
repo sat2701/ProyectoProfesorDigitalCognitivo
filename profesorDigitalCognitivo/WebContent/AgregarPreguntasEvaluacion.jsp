@@ -34,16 +34,12 @@ String getEvaluacion = request.getParameter("nombreEvaluacion");
 	<header>
 		<div class="main">
 			<div class="wrap">
-		       		<h2><a class="fuenteLetra3"> Evaluaciones </a></h2>
+		       		<h2 class=fuenteletra8 >Asignar preguntas a <a class="fuenteLetra3"> Evaluación  </a></h2>
 	 		</div>
       	</div>
  
       
       <div class="contenido" >
-      <form action="/ServletEvaluacion" method="get">
-      	<input type="hidden" name="codigoCurso" value="<%=getCodigo%>"/>
-      	<button type="input" class="btn btn-primary" name="ventanaRegistrar">Agregar Evaluación</button>
-      </form>
            
 	<div class="row">
       <div class="panel panel-default">
@@ -52,6 +48,9 @@ String getEvaluacion = request.getParameter("nombreEvaluacion");
             Evaluaciones 
           </h4>
         </div>
+        <form action="/ServletPregunta" method="post">
+				<input type="submit" value="Dejar de agregar preguntas" name="parar" onClick="alert('Se ha registrado la evaluación con éxito.')"/>
+		</form>
         <table class="table table-fixed" >
         	<thead>
             <tr>
@@ -72,15 +71,15 @@ String getEvaluacion = request.getParameter("nombreEvaluacion");
 							<td><%=pregunta.getDescripcionPregunta() %> </td>
 							<td><%=pregunta.getPregunta() %> </td>	
 							<td>
-							
 							<form action="/ServletPregunta" method="post" >
+								<input type="hidden" value="<%=getCodigo%>" name="codigoCurso">
+								<input type="hidden" value="<%=getEvaluacion%>" name="nombreEvaluacion">
+					
 								<input type="hidden" value="<%=pregunta.getTema()%>" name="tema">
 								<input type="hidden" value="<%=pregunta.getSubtema()%>" name="subtema">
-								<input type="hidden" value="<%=pregunta.getDescripcionPregunta()%>" name=descripcion>
-								<input type="hidden" value="<%=pregunta.getPregunta()%>" name="pregunta">
-								<input type="hidden" value="<%=getCodigo%>" name="nombreEvaluacion">
-								<input type="hidden" value="<%=getEvaluacion%>" name="codigoCurso">
-								<button type="submit" name="agregarPregunta"> <span class="glyphicon glyphicon-pushpin"></span></button>
+								<input type="hidden" value="<%=pregunta.getDescripcionPregunta()%>" name="descripcion">
+								<input type="hidden" value="<%=pregunta.getPregunta()%>" name="pregunta">									
+								<button type="submit" name="agregarPreguntaEvaluacion"> <span class="glyphicon glyphicon-pushpin"></span></button>
 							</form>
 							</td>
         				</tr>   

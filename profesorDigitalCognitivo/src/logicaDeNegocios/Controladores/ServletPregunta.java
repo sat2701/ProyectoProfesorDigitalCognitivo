@@ -43,7 +43,7 @@ public class ServletPregunta extends HttpServlet {
 			pasarPregunta.setDescripcionPregunta(request.getParameter("radios"));
 			pasarPregunta.setRespuestaCorrecta(request.getParameter("respuestaCorrecta"));
 			
-			if(request.getParameter("radios").equals("Selección Única")){
+			if(request.getParameter("radios").equals("Selecciï¿½n ï¿½nica")){
 				pregunta.crearPregunta(pasarPregunta.getPregunta(),pasarPregunta.getDescripcionPregunta(),
 						pasarPregunta.getDescripcionAyuda(), pasarPregunta.getRespuestaCorrecta(),
 						request.getParameter("DescripcionSubtema"), request.getParameter("DescripcionTema"));
@@ -72,7 +72,6 @@ public class ServletPregunta extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		DtoPregunta pasarPregunta=new DtoPregunta();
 		DaoPregunta pregunta=new DaoPregunta();
 		
 		if(request.getParameter("agregarPregunta")!=null) {			
@@ -82,11 +81,21 @@ public class ServletPregunta extends HttpServlet {
 			String pPregunta = request.getParameter("pregunta");
 			String evaluacion = request.getParameter("nombreEvaluacion");
 			String codigo = request.getParameter("codigoCurso");
-			
 			pregunta.agregarPreguntaEvaluacion(tema, subtema, descripcion, pPregunta, evaluacion, codigo);
 			
-			response.sendRedirect("Evaluacion.jsp");
 		
+		}else if(request.getParameter("agregarPreguntaEvaluacion")!=null){
+			String curso = request.getParameter("codigoCurso"); 
+			String evaluacion = request.getParameter("nombreEvaluacion"); 
+			String tema = request.getParameter("tema"); 
+			String subtema = request.getParameter("subtema"); 
+			String descripcion = request.getParameter("descripcion"); 
+			String pPregunta = request.getParameter("pregunta"); 
+			pregunta.agregarPreguntaEvaluacion(tema, subtema, descripcion, pPregunta, evaluacion, curso);
+			response.setIntHeader("refresh", -1);
+			
+		}else if(request.getParameter("parar")!=null){
+			response.sendRedirect("MenuPrincipal.jsp");
 		}
 	}
 }
