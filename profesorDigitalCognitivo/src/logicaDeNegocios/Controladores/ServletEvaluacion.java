@@ -78,14 +78,13 @@ public class ServletEvaluacion extends HttpServlet {
 			
 			DtoParteEvaluacion parteEvaluacion= new DtoParteEvaluacion();
 			FabricaEvaluacion fabricaParte;
-			String tipo;
 			String puntos;
 			DaoParteEvaluacion daoParte = new DaoParteEvaluacion();
 			String nombreEvaluacion = evaluacionFabricada.getNombreEvaluacion();
 			
 			if(request.getParameter("seleccionUnica")!=null){
 				puntos = request.getParameter("puntosSeleccionUnica");				
-				daoParte.crearParteEvaluacion("Selección Única", puntos, codigoCurso, nombreEvaluacion);
+				daoParte.crearParteEvaluacion("SelecciÃ³n Ãšnica", puntos, codigoCurso, nombreEvaluacion);
 			}if(request.getParameter("desarrollo")!=null){
 				puntos = request.getParameter("puntosDesarrollo");
 				daoParte.crearParteEvaluacion("Desarrollo", puntos, codigoCurso, nombreEvaluacion);
