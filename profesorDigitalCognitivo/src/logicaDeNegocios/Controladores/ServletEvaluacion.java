@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import javax.swing.JOptionPane;
 
 import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
@@ -139,11 +140,14 @@ public class ServletEvaluacion extends HttpServlet {
 				
 				Paragraph titulo=new Paragraph();
 				Font fontTitulo=new Font(Font.FontFamily.HELVETICA,16,Font.BOLD,BaseColor.BLACK);
-				titulo.add(new Phrase("Evaluación" + request.getParameter("NombreEvaluacion") +"",fontTitulo));
+				titulo.add(new Phrase("Evaluación " + request.getParameter("NombreEvaluacion") +"",fontTitulo));
 				titulo.setAlignment(Element.ALIGN_CENTER);
+				titulo.add(new Phrase(Chunk.NEWLINE));
+				titulo.add(new Phrase(Chunk.NEWLINE));
 				doc.add(titulo);
 				
-				PdfPTable tabla =new PdfPTable(6);
+				PdfPTable tabla =new PdfPTable(7);
+				
 				PdfPCell celda1= new PdfPCell(new Paragraph("Nombre",FontFactory.getFont("Arial",12,Font.BOLD,BaseColor.BLACK)));
 				PdfPCell celda2= new PdfPCell(new Paragraph("Puntaje Total",FontFactory.getFont("Arial",12,Font.BOLD,BaseColor.BLACK)));
 				PdfPCell celda3= new PdfPCell(new Paragraph("Hora y Fecha",FontFactory.getFont("Arial",12,Font.BOLD,BaseColor.BLACK)));
@@ -151,6 +155,7 @@ public class ServletEvaluacion extends HttpServlet {
 				PdfPCell celda5= new PdfPCell(new Paragraph("Estado",FontFactory.getFont("Arial",12,Font.BOLD,BaseColor.BLACK)));
 				PdfPCell celda6= new PdfPCell(new Paragraph("Porcentaje",FontFactory.getFont("Arial",12,Font.BOLD,BaseColor.BLACK)));
 				PdfPCell celda7= new PdfPCell(new Paragraph("Tipo",FontFactory.getFont("Arial",12,Font.BOLD,BaseColor.BLACK)));
+				
 				
 				tabla.addCell(celda1);
 				tabla.addCell(celda2);
@@ -160,6 +165,9 @@ public class ServletEvaluacion extends HttpServlet {
 				tabla.addCell(celda6);
 				tabla.addCell(celda7);
 				
+				tabla.setTotalWidth(350f); 
+				
+				
 				tabla.addCell(listaEvaluaciones.get(0).getNombreEvaluacion());
 				tabla.addCell(String.valueOf(listaEvaluaciones.get(0).getPuntajeTotal()));
 				tabla.addCell(listaEvaluaciones.get(0).getHoraFecha());
@@ -167,6 +175,8 @@ public class ServletEvaluacion extends HttpServlet {
 				tabla.addCell(listaEvaluaciones.get(0).getTipo());
 				tabla.addCell(String.valueOf(listaEvaluaciones.get(0).getPorcentajeCurso()));
 				tabla.addCell(listaEvaluaciones.get(0).getTipo());
+				
+				doc.add(tabla);
 				/*
 					Paragraph parrafo=new Paragraph();
 					Font fontParrafo=new Font(Font.FontFamily.HELVETICA,16,Font.BOLD,BaseColor.BLACK);
