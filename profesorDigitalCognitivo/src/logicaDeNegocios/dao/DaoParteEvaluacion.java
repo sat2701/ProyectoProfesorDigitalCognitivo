@@ -58,4 +58,27 @@ public class DaoParteEvaluacion {
 		return listaPreguntas;
 	}
 
+	public ArrayList<DtoParteEvaluacion> MostrarPartesEvaluacionPDF( String curso, String nombreEvaluacion){
+		ArrayList<DtoParteEvaluacion> partesEvaluacion= new ArrayList<DtoParteEvaluacion>();
+		try {
+			state= ConexionSingleton.conectar().createStatement();
+			 		    
+			String sql= "SELECT  tipo,puntajeAsignado from parteEvaluacion "
+					+ " where evaluacion_nombre='"+nombreEvaluacion+"' "
+					+ "and evalucion_curso_codigo = '"+curso+"';";
+
+			ResultSet rs1=state.executeQuery(sql);
+			while(rs1.next()){
+				DtoParteEvaluacion partes=new DtoParteEvaluacion();
+				partes.setTipoParte(rs1.getString(1));
+				partes.setPuntajeAsignado(rs1.getInt(2));
+				
+				partesEvaluacion.add(partes);
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			}
+		return partesEvaluacion;
+	}
 }

@@ -127,7 +127,10 @@ public class ServletEvaluacion extends HttpServlet {
 	}
 	else if(request.getParameter("GenerarPDF")!=null){
 		DaoEvaluacion datosEvaluacion= new DaoEvaluacion();
+		DaoParteEvaluacion daoParte=new DaoParteEvaluacion();
 		ArrayList<DtoEvaluacion> listaEvaluaciones= new ArrayList<DtoEvaluacion>();
+		ArrayList<DtoParteEvaluacion> listarPartes= new ArrayList<DtoParteEvaluacion>();
+		listarPartes=daoParte.MostrarPartesEvaluacionPDF(request.getParameter("NombreEvaluacion"),request.getParameter("CodigoCursoActual"));
 		listaEvaluaciones= datosEvaluacion.consultarInfoEvaluacion(request.getParameter("NombreEvaluacion"),request.getParameter("CodigoCursoActual"));
 		response.setContentType("application/pdf");
 		ServletOutputStream out= response.getOutputStream();
@@ -145,8 +148,10 @@ public class ServletEvaluacion extends HttpServlet {
 				titulo.add(new Phrase(Chunk.NEWLINE));
 				doc.add(titulo);
 				
-				PdfPTable tabla =new PdfPTable(7);
+				PdfPTable tabla1 =new PdfPTable(4);
+				PdfPTable tabla2=new PdfPTable(4);
 				
+				PdfPCell celda0= new PdfPCell(new Paragraph("Curso",FontFactory.getFont("Arial",12,Font.BOLD,BaseColor.BLACK)));
 				PdfPCell celda1= new PdfPCell(new Paragraph("Nombre",FontFactory.getFont("Arial",12,Font.BOLD,BaseColor.BLACK)));
 				PdfPCell celda2= new PdfPCell(new Paragraph("Puntaje Total",FontFactory.getFont("Arial",12,Font.BOLD,BaseColor.BLACK)));
 				PdfPCell celda3= new PdfPCell(new Paragraph("Hora y Fecha",FontFactory.getFont("Arial",12,Font.BOLD,BaseColor.BLACK)));
@@ -155,35 +160,34 @@ public class ServletEvaluacion extends HttpServlet {
 				PdfPCell celda6= new PdfPCell(new Paragraph("Porcentaje",FontFactory.getFont("Arial",12,Font.BOLD,BaseColor.BLACK)));
 				PdfPCell celda7= new PdfPCell(new Paragraph("Tipo",FontFactory.getFont("Arial",12,Font.BOLD,BaseColor.BLACK)));
 				
+				tabla1.addCell(celda0);
+				tabla1.addCell(celda1);
+				tabla1.addCell(celda2);
+				tabla1.addCell(celda3);
+				tabla2.addCell(celda4);
+				tabla2.addCell(celda5);
+				tabla2.addCell(celda6);
+				tabla2.addCell(celda7);				
 				
-				tabla.addCell(celda1);
-				tabla.addCell(celda2);
-				tabla.addCell(celda3);
-				tabla.addCell(celda4);
-				tabla.addCell(celda5);
-				tabla.addCell(celda6);
-				tabla.addCell(celda7);
+				tabla1.addCell(request.getParameter("CodigoCursoActual"));
+				tabla1.addCell(listaEvaluaciones.get(0).getNombreEvaluacion());
+				tabla1.addCell(String.valueOf(listaEvaluaciones.get(0).getPuntajeTotal()));
+				tabla1.addCell(listaEvaluaciones.get(0).getHoraFecha());
+				tabla2.addCell(String.valueOf(listaEvaluaciones.get(0).getMinutosDisponibles()));
+				tabla2.addCell(listaEvaluaciones.get(0).getTipo());
+				tabla2.addCell(String.valueOf(listaEvaluaciones.get(0).getPorcentajeCurso()));
+				tabla2.addCell(listaEvaluaciones.get(0).getTipo());
 				
-				tabla.setTotalWidth(350f); 
+				doc.add(tabla1);
+				doc.add(tabla2);
 				
-				
-				tabla.addCell(listaEvaluaciones.get(0).getNombreEvaluacion());
-				tabla.addCell(String.valueOf(listaEvaluaciones.get(0).getPuntajeTotal()));
-				tabla.addCell(listaEvaluaciones.get(0).getHoraFecha());
-				tabla.addCell(String.valueOf(listaEvaluaciones.get(0).getMinutosDisponibles()));
-				tabla.addCell(listaEvaluaciones.get(0).getTipo());
-				tabla.addCell(String.valueOf(listaEvaluaciones.get(0).getPorcentajeCurso()));
-				tabla.addCell(listaEvaluaciones.get(0).getTipo());
-				
-				doc.add(tabla);
-				/*
-					Paragraph parrafo=new Paragraph();
-					Font fontParrafo=new Font(Font.FontFamily.HELVETICA,16,Font.BOLD,BaseColor.BLACK);
-					parrafo.add(new Phrase(contenido,fontParrafo));
-					parrafo.setAlignment(Element.ALIGN_CENTER);
-					doc.add(parrafo);
-				
-				*/
+				for(int j=0;j<listarPartes.size();j++){
+					String texto="Parte de "+ listarPartes.get(j).getTipoParte() + ". Valor " + listarPartes.get(j).getPuntajeAsignado() + " puntos.";
+					Paragraph pregunta=new Paragraph(texto);
+					pregunta.setAlignment(Element.ALIGN_JUSTIFIED);
+					pregunta.add(new Phrase(Chunk.NEWLINE));
+					doc.add(pregunta); 
+				}
 				doc.close();
 				
 			}catch(Exception e1){
