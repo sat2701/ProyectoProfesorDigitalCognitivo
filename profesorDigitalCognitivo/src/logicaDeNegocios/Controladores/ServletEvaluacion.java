@@ -33,6 +33,7 @@ import logicaDeNegocios.dao.DaoParteEvaluacion;
 import logicaDeNegocios.dto.DtoCurso;
 import logicaDeNegocios.dto.DtoEvaluacion;
 import logicaDeNegocios.dto.DtoParteEvaluacion;
+import logicaDeNegocios.dto.DtoPregunta;
 import logicaDeNegocios.factory.FabricaCurso;
 import logicaDeNegocios.factory.FabricaEvaluacion;
 import logicaDeNegocios.factory.FabricaEvaluacionFormativa;
@@ -121,17 +122,24 @@ public class ServletEvaluacion extends HttpServlet {
 		
 	}else if(request.getParameter("Habilitar")!=null){
 		DaoEvaluacion eva=new DaoEvaluacion();
-		String[] correos=request.getParameterValues("seleccion");
-		eva.habilitarEvaluacion(request.getParameter("CodigoCursoActual"), request.getParameter("NombreEvaluacionActual"),correos);
+		//String[] correos=request.getParameterValues("seleccion");
+		String[] idEstudiantes=request.getParameterValues("seleccion");
+		eva.habilitarEvaluacion(request.getParameter("CodigoCursoActual"), request.getParameter("NombreEvaluacionActual"),idEstudiantes);
 		response.sendRedirect("EvaluacionesNoHabilitadas.jsp");
 	}
 	else if(request.getParameter("GenerarPDF")!=null){
+		
+		String curso=request.getParameter("CodigoCursoActual");
+		String evaluacion=request.getParameter("NombreEvaluacion");
+		
 		DaoEvaluacion datosEvaluacion= new DaoEvaluacion();
 		DaoParteEvaluacion daoParte=new DaoParteEvaluacion();
+		
 		ArrayList<DtoEvaluacion> listaEvaluaciones= new ArrayList<DtoEvaluacion>();
 		ArrayList<DtoParteEvaluacion> listarPartes= new ArrayList<DtoParteEvaluacion>();
-		listarPartes=daoParte.MostrarPartesEvaluacionPDF(request.getParameter("NombreEvaluacion"),request.getParameter("CodigoCursoActual"));
-		listaEvaluaciones= datosEvaluacion.consultarInfoEvaluacion(request.getParameter("NombreEvaluacion"),request.getParameter("CodigoCursoActual"));
+		listarPartes=daoParte.MostrarPartesEvaluacionPDF(curso,evaluacion);
+		listaEvaluaciones= datosEvaluacion.consultarInfoEvaluacion(evaluacion,curso);
+		
 		response.setContentType("application/pdf");
 		ServletOutputStream out= response.getOutputStream();
 		try{
@@ -142,7 +150,7 @@ public class ServletEvaluacion extends HttpServlet {
 				
 				Paragraph titulo=new Paragraph();
 				Font fontTitulo=new Font(Font.FontFamily.HELVETICA,16,Font.BOLD,BaseColor.BLACK);
-				titulo.add(new Phrase("Evaluación " + request.getParameter("NombreEvaluacion") +"",fontTitulo));
+				titulo.add(new Phrase("Evaluación " + evaluacion +"",fontTitulo));
 				titulo.setAlignment(Element.ALIGN_CENTER);
 				titulo.add(new Phrase(Chunk.NEWLINE));
 				titulo.add(new Phrase(Chunk.NEWLINE));
@@ -181,13 +189,34 @@ public class ServletEvaluacion extends HttpServlet {
 				doc.add(tabla1);
 				doc.add(tabla2);
 				
+				Paragraph espacio=new Paragraph();
+				espacio.add(new Phrase(Chunk.NEWLINE));
+				doc.add(espacio);
+				
 				for(int j=0;j<listarPartes.size();j++){
-					String texto="Parte de "+ listarPartes.get(j).getTipoParte() + ". Valor " + listarPartes.get(j).getPuntajeAsignado() + " puntos.";
-					Paragraph pregunta=new Paragraph(texto);
-					pregunta.setAlignment(Element.ALIGN_JUSTIFIED);
-					pregunta.add(new Phrase(Chunk.NEWLINE));
-					doc.add(pregunta); 
+					String tipo= listarPartes.get(j).getTipoParte();
+					String texto="Parte de "+ tipo + ". Valor " + listarPartes.get(j).getPuntajeAsignado() + " puntos.";
+					Paragraph parte=new Paragraph();
+					Font fontParte=new Font(Font.FontFamily.TIMES_ROMAN,12,Font.BOLD,BaseColor.BLACK);
+					parte.add(new Phrase(texto,fontParte));
+					parte.setAlignment(Element.ALIGN_JUSTIFIED);
+					parte.add(new Phrase(Chunk.NEWLINE));
+					doc.add(parte);
+					
+					ArrayList<DtoPregunta> listarPreguntasParte= new ArrayList<DtoPregunta>();
+					listarPreguntasParte=daoParte.MostrarPreguntasPartePDF(curso,evaluacion,tipo);
+					
+					for(int k=0;k<listarPreguntasParte.size();k++){
+						String textoPregunta=k+1 + ") "+ listarPreguntasParte.get(k).getPregunta();
+						Paragraph pregunta=new Paragraph();
+						Font fontPregunta=new Font(Font.FontFamily.TIMES_ROMAN,11,Font.NORMAL,BaseColor.BLACK);
+						pregunta.add(new Phrase(textoPregunta,fontPregunta));
+						pregunta.setAlignment(Element.ALIGN_JUSTIFIED);
+						pregunta.add(new Phrase(Chunk.NEWLINE));
+						doc.add(pregunta);
+					}
 				}
+				
 				doc.close();
 				
 			}catch(Exception e1){
@@ -196,6 +225,14 @@ public class ServletEvaluacion extends HttpServlet {
 		}finally{
 			out.close();
 		}
+	}else if(request.getParameter("estadoEvaluacion")!=null){
+		HttpSession session = request.getSession(true);
+		session.setAttribute("NombreEvaluacion",request.getParameter("nombre"));
+		response.sendRedirect("EstadoEvaluaciones.jsp");
+	}else if(request.getParameter("detalleEvaluacion")!=null){
+		HttpSession session = request.getSession(true);
+		session.setAttribute("NombreEvaluacion",request.getParameter("nombre"));
+		response.sendRedirect("EvaluacionesRespondidas.jsp");
 	}
 }
 	
