@@ -29,6 +29,7 @@
 		</div> 
      <div class="contenido" style="margin:45px auto"></hr>
      <form action="/ServletEvaluacion" method="get">
+     <button type="button" class="btn btn-primary" name=GenerarPDFEstado>Generar PDF</button>
 	<div class="row">
       <div class="panel panel-default">
       
@@ -45,7 +46,6 @@
               <th class="col-xs-2">Id Estudiante</th>
               <th class="col-xs-2">Nombre</th>
               <th class="col-xs-3">Estado Actual</th>
-              <th class="col-xs-2"> Generar PDF</th>
             </tr>
           </thead>
           <tbody>
@@ -57,7 +57,6 @@
 									<td><%=estado.getIdEstudiante() %> </td>
 									<td><%=estado.getNombreEstudiante()%> </td>
 									<td><%=estado.getEstado() %></td>
-									<td><button type="submit" name="GenerarPDF"> <span class="glyphicon glyphicon-save-file"></span></button></td>
         				</tr>
         				<%
         					}

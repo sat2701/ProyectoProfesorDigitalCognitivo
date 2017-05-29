@@ -232,6 +232,56 @@ public class ServletEvaluacion extends HttpServlet {
 		HttpSession session = request.getSession(true);
 		session.setAttribute("NombreEvaluacion",request.getParameter("nombre"));
 		response.sendRedirect("EvaluacionesRespondidas.jsp");
+		
+	}else if(request.getParameter("GenerarPDFEstados")!=null){
+		response.setContentType("application/pdf");
+		ServletOutputStream out= response.getOutputStream();
+		try{
+			try{
+				Document doc= new Document();
+				PdfWriter.getInstance(doc, out);
+				doc.open();
+				
+				Paragraph titulo=new Paragraph();
+				Font fontTitulo=new Font(Font.FontFamily.HELVETICA,16,Font.BOLD,BaseColor.BLACK);
+				titulo.add(new Phrase("Estado de la Evaluación",fontTitulo));
+				titulo.setAlignment(Element.ALIGN_CENTER);
+				titulo.add(new Phrase(Chunk.NEWLINE));
+				titulo.add(new Phrase(Chunk.NEWLINE));
+				doc.add(titulo);
+				
+				PdfPTable tabla1 =new PdfPTable(4);
+				
+				
+				PdfPCell celda0= new PdfPCell(new Paragraph("IdEstudiante",FontFactory.getFont("Arial",12,Font.BOLD,BaseColor.BLACK)));
+				PdfPCell celda1= new PdfPCell(new Paragraph("Nombre",FontFactory.getFont("Arial",12,Font.BOLD,BaseColor.BLACK)));
+				PdfPCell celda2= new PdfPCell(new Paragraph("Estado Actual",FontFactory.getFont("Arial",12,Font.BOLD,BaseColor.BLACK)));
+				
+				
+				tabla1.addCell(celda0);
+				tabla1.addCell(celda1);
+				tabla1.addCell(celda2);			
+				
+				/*
+				tabla1.addCell(request.getParameter("CodigoCursoActual"));
+				tabla1.addCell(listaEvaluaciones.get(0).getNombreEvaluacion());
+				tabla1.addCell(String.valueOf(listaEvaluaciones.get(0).getPuntajeTotal()));
+				*/
+				
+				doc.add(tabla1);
+				
+				Paragraph espacio=new Paragraph();
+				espacio.add(new Phrase(Chunk.NEWLINE));
+				doc.add(espacio);
+
+				doc.close();
+				
+			}catch(Exception e1){
+				e1.getMessage();
+			}
+		}finally{
+			out.close();
+		}
 	}
 }
 	
