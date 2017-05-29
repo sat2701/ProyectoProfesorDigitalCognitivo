@@ -9,6 +9,7 @@ import conexionMySql.ConexionSingleton;
 import logicaDeNegocios.dto.DtoEvaluacionAplicada;
 import logicaDeNegocios.dto.DtoPregunta;
 
+
 public class DaoEvaluacionAplicada {
 
 	Statement state;
@@ -16,8 +17,8 @@ public class DaoEvaluacionAplicada {
 	public void crearEvaluacionAplicada(String idEstudiante, String cursoCodigo, String nombreEvaluacion){
 		try {
 			state= ConexionSingleton.conectar().createStatement(); 
-			String sql="INSERT INTO evaluacionAplicada VALUES(0,'" +
-					idEstudiante +"','" + cursoCodigo + "','" + nombreEvaluacion +"','Sin realizar');";
+			String sql="INSERT INTO evaluacionAplicada VALUES(0,'" +idEstudiante +"',"
+					+ "'" + cursoCodigo + "','" + nombreEvaluacion +"','Sin realizar');";
 			state.executeUpdate(sql);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block

@@ -122,7 +122,6 @@ public class ServletEvaluacion extends HttpServlet {
 		
 	}else if(request.getParameter("Habilitar")!=null){
 		DaoEvaluacion eva=new DaoEvaluacion();
-		//String[] correos=request.getParameterValues("seleccion");
 		String[] idEstudiantes=request.getParameterValues("seleccion");
 		eva.habilitarEvaluacion(request.getParameter("CodigoCursoActual"), request.getParameter("NombreEvaluacionActual"),idEstudiantes);
 		response.sendRedirect("EvaluacionesNoHabilitadas.jsp");
