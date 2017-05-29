@@ -50,7 +50,8 @@
           </thead>
           <tbody>
           	<tr>
-				<% for(int i=0; i<listaAplicada.listarEstadoEvaluaciones(session.getAttribute("IdentificadorCurso").toString(),session.getAttribute("NombreEvaluacion").toString()).size();i++){
+				<% int condicion=listaAplicada.listarEstadoEvaluaciones(session.getAttribute("IdentificadorCurso").toString(), session.getAttribute("NombreEvaluacion").toString()).size();
+					for(int i=0; i<condicion;i++){
 					estado=listaAplicada.listarEstadoEvaluaciones(session.getAttribute("IdentificadorCurso").toString(),session.getAttribute("NombreEvaluacion").toString()).get(i);
 				%>
 									<td><%=estado.getIdEstudiante() %> </td>
