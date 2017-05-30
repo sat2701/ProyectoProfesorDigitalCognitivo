@@ -52,6 +52,6 @@ public class DaoEvaluacionAplicada {
 		} 
 		return listaEvaluaciones;
 	}
-	
+	 
 	
 }

@@ -29,9 +29,11 @@ import com.itextpdf.text.pdf.codec.Base64.OutputStream;
 import logicaDeNegocios.Curso;
 import logicaDeNegocios.Evaluacion;
 import logicaDeNegocios.dao.DaoEvaluacion;
+import logicaDeNegocios.dao.DaoEvaluacionAplicada;
 import logicaDeNegocios.dao.DaoParteEvaluacion;
 import logicaDeNegocios.dto.DtoCurso;
 import logicaDeNegocios.dto.DtoEvaluacion;
+import logicaDeNegocios.dto.DtoEvaluacionAplicada;
 import logicaDeNegocios.dto.DtoParteEvaluacion;
 import logicaDeNegocios.dto.DtoPregunta;
 import logicaDeNegocios.factory.FabricaCurso;
@@ -230,8 +232,17 @@ public class ServletEvaluacion extends HttpServlet {
 		response.sendRedirect("EstadoEvaluaciones.jsp");
 		
 	}else if(request.getParameter("detalleEvaluacion")!=null){
-				
+		HttpSession session = request.getSession(true);
+		session.setAttribute("IdEstudiante",request.getParameter("Estudiante"));
+		response.sendRedirect("EvaluacionesRespondidas.jsp");
+		
 	}else if(request.getParameter("GenerarPDFEstado")!=null){
+		
+		String curso=request.getParameter("CodigoCursoActual");
+		String evaluacion=request.getParameter("NombreEvaluacion");
+		DaoEvaluacionAplicada aplicada=new DaoEvaluacionAplicada();
+		DtoEvaluacionAplicada dto=new DtoEvaluacionAplicada();
+		
 		response.setContentType("application/pdf");
 		ServletOutputStream out= response.getOutputStream();
 		try{
@@ -242,36 +253,29 @@ public class ServletEvaluacion extends HttpServlet {
 				
 				Paragraph titulo=new Paragraph();
 				Font fontTitulo=new Font(Font.FontFamily.HELVETICA,16,Font.BOLD,BaseColor.BLACK);
-				titulo.add(new Phrase("Estado de la Evaluación",fontTitulo));
+				titulo.add(new Phrase("Estado de la Evaluación " + evaluacion,fontTitulo));
 				titulo.setAlignment(Element.ALIGN_CENTER);
 				titulo.add(new Phrase(Chunk.NEWLINE));
 				titulo.add(new Phrase(Chunk.NEWLINE));
 				doc.add(titulo);
 				
-				PdfPTable tabla1 =new PdfPTable(4);
-				
+				PdfPTable tabla1 =new PdfPTable(3);
 				
 				PdfPCell celda0= new PdfPCell(new Paragraph("IdEstudiante",FontFactory.getFont("Arial",12,Font.BOLD,BaseColor.BLACK)));
 				PdfPCell celda1= new PdfPCell(new Paragraph("Nombre",FontFactory.getFont("Arial",12,Font.BOLD,BaseColor.BLACK)));
 				PdfPCell celda2= new PdfPCell(new Paragraph("Estado Actual",FontFactory.getFont("Arial",12,Font.BOLD,BaseColor.BLACK)));
 				
-				
 				tabla1.addCell(celda0);
 				tabla1.addCell(celda1);
 				tabla1.addCell(celda2);			
 				
-				/*
-				tabla1.addCell(request.getParameter("CodigoCursoActual"));
-				tabla1.addCell(listaEvaluaciones.get(0).getNombreEvaluacion());
-				tabla1.addCell(String.valueOf(listaEvaluaciones.get(0).getPuntajeTotal()));
-				*/
-				
+				for(int i=0;i<aplicada.listarEstadoEvaluaciones(curso, evaluacion).size();i++){
+					dto=aplicada.listarEstadoEvaluaciones(curso, evaluacion).get(i);
+					tabla1.addCell(dto.getIdEstudiante());
+					tabla1.addCell(dto.getNombreEstudiante());
+					tabla1.addCell(dto.getEstado());
+				}
 				doc.add(tabla1);
-				
-				Paragraph espacio=new Paragraph();
-				espacio.add(new Phrase(Chunk.NEWLINE));
-				doc.add(espacio);
-
 				doc.close();
 				
 			}catch(Exception e1){

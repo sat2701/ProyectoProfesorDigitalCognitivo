@@ -30,6 +30,7 @@
      <div class="contenido" style="margin:45px auto"></hr>
      <form action="/ServletEvaluacion" method="get">
      <button type="submit" class="btn btn-primary" name=GenerarPDFEstado>Generar PDF</button>
+     <button type="submit" class="btn btn-primary" name=GenerarPDFEstadoIngles>Generar PDF Inglés</button>
 	<div class="row">
       <div class="panel panel-default">
       
@@ -60,10 +61,14 @@
 				%>
 									<td><%=estado.getIdEstudiante() %> </td>
 									<td><%=estado.getNombreEstudiante()%> </td>
-									<td><%=estado.getEstado() %></td>
+									<td><%=estado.getEstado() %>
+									<input type="hidden" name="Estudiante" value="<%=estado.getIdEstudiante() %>">
+									<input type="hidden" name="CodigoCursoActual" value="<%=session.getAttribute("IdentificadorCurso").toString()%>">
+									<input type="hidden" name="NombreEvaluacion" value="<%=session.getAttribute("NombreEvaluacion").toString() %>"></td>
 									<%if(estado.getEstado().equals("Respondida") || estado.getEstado().equals("Respondida Incompleta")){
 									%>
 									<td><button type="submit" name="detalleEvaluacion"> <span class="glyphicon glyphicon-list-alt"></span></button></td>
+									
 									<%} %>
         				</tr>
         				<%
