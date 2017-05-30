@@ -4,8 +4,8 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 	<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
-	<%@ page import = "logicaDeNegocios.dao.DaoEvaluacionAplicada"%>
-	<%@ page import = "logicaDeNegocios.dto.DtoEvaluacionAplicada"%>
+	<%@ page import = "logicaDeNegocios.dao.DaoRespuestaDada"%>
+	<%@ page import = "logicaDeNegocios.dto.DtoRespuestaDada"%>
 <html>
 <head>
     <title>Estado de la Evaluación</title>
@@ -19,8 +19,8 @@
 </head>
 </head>
 <body>
-	<% DaoEvaluacionAplicada listaAplicada=new DaoEvaluacionAplicada();
-	 DtoEvaluacionAplicada estado=new DtoEvaluacionAplicada(); %>
+	<% DaoRespuestaDada listaRespuestas=new DaoRespuestaDada();
+	 DtoRespuestaDada respuesta=new DtoRespuestaDada(); %>
 	<header>
 		<div="main">
 			<div class="wrap">
@@ -46,7 +46,6 @@
               <th class="col-xs-2">Pregunta</th>
               <th class="col-xs-2">Respuesta</th>
               <th class="col-xs-3">Correcto</th>
-              <th class="col-xs-3">Puntos Obtenidos</th>
             
             </tr>
           </thead>
@@ -55,18 +54,15 @@
 				<% 
 				String curso=session.getAttribute("IdentificadorCurso").toString();
 				String evaluacion=session.getAttribute("NombreEvaluacion").toString();
-				int condicion=listaAplicada.listarEstadoEvaluaciones(curso, evaluacion).size();
+				String estudiante=session.getAttribute("Estudiante").toString();
+				int condicion=listaRespuestas.listarRespuestasDadas(curso, evaluacion, estudiante).size();
 					for(int i=0; i<condicion;i++){
-					estado=listaAplicada.listarEstadoEvaluaciones(curso, evaluacion).get(i);
+					respuesta=listaRespuestas.listarRespuestasDadas(curso, evaluacion, estudiante).get(i);
 				%>
-									<td><%=estado.getIdEstudiante() %> </td>
-									<td><%=estado.getNombreEstudiante()%> </td>
-									<td><%=estado.getEstado() %>
-									<td><%=estado.getEstado() %>
-									<input type="hidden" name="Estudiante" value="<%=estado.getIdEstudiante() %>">
-									<input type="hidden" name="CodigoCursoActual" value="<%=session.getAttribute("IdentificadorCurso").toString()%>">
-									<input type="hidden" name="NombreEvaluacion" value="<%=session.getAttribute("NombreEvaluacion").toString() %>"></td>
-									<td>Muchos jeje</td>
+									<td><%=respuesta.getTipoPregunta() %> </td>
+									<td><%=respuesta.getPregunta() %> </td>
+									<td><%=respuesta.getRespuesta() %>
+									<td><%=respuesta.isCorrecto() %></td>
         				</tr>
         				<%
         					}
