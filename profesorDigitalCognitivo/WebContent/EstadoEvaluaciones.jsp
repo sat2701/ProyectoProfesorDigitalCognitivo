@@ -29,7 +29,7 @@
 		</div> 
      <div class="contenido" style="margin:45px auto"></hr>
      <form action="/ServletEvaluacion" method="get">
-     <button type="button" class="btn btn-primary" name=GenerarPDFEstado>Generar PDF</button>
+     <button type="submit" class="btn btn-primary" name=GenerarPDFEstado>Generar PDF</button>
 	<div class="row">
       <div class="panel panel-default">
       
@@ -46,17 +46,25 @@
               <th class="col-xs-2">Id Estudiante</th>
               <th class="col-xs-2">Nombre</th>
               <th class="col-xs-3">Estado Actual</th>
+              <th class="col-xs-3">Detalle</th>
             </tr>
           </thead>
           <tbody>
           	<tr>
-				<% int condicion=listaAplicada.listarEstadoEvaluaciones(session.getAttribute("IdentificadorCurso").toString(), session.getAttribute("NombreEvaluacion").toString()).size();
+				<% 
+				String curso=session.getAttribute("IdentificadorCurso").toString();
+				String evaluacion=session.getAttribute("NombreEvaluacion").toString();
+				int condicion=listaAplicada.listarEstadoEvaluaciones(curso, evaluacion).size();
 					for(int i=0; i<condicion;i++){
-					estado=listaAplicada.listarEstadoEvaluaciones(session.getAttribute("IdentificadorCurso").toString(),session.getAttribute("NombreEvaluacion").toString()).get(i);
+					estado=listaAplicada.listarEstadoEvaluaciones(curso, evaluacion).get(i);
 				%>
 									<td><%=estado.getIdEstudiante() %> </td>
 									<td><%=estado.getNombreEstudiante()%> </td>
 									<td><%=estado.getEstado() %></td>
+									<%if(estado.getEstado().equals("Respondida") || estado.getEstado().equals("Respondida Incompleta")){
+									%>
+									<td><button type="submit" name="detalleEvaluacion"> <span class="glyphicon glyphicon-list-alt"></span></button></td>
+									<%} %>
         				</tr>
         				<%
         					}

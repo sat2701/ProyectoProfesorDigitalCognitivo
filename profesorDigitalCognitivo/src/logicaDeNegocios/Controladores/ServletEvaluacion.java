@@ -226,14 +226,12 @@ public class ServletEvaluacion extends HttpServlet {
 		}
 	}else if(request.getParameter("estadoEvaluacion")!=null){
 		HttpSession session = request.getSession(true);
-		session.setAttribute("NombreEvaluacion",request.getParameter("nombre"));
+		session.setAttribute("NombreEvaluacion",request.getParameter("estadoEvaluacion"));
 		response.sendRedirect("EstadoEvaluaciones.jsp");
-	}else if(request.getParameter("detalleEvaluacion")!=null){
-		HttpSession session = request.getSession(true);
-		session.setAttribute("NombreEvaluacion",request.getParameter("nombre"));
-		response.sendRedirect("EvaluacionesRespondidas.jsp");
 		
-	}else if(request.getParameter("GenerarPDFEstados")!=null){
+	}else if(request.getParameter("detalleEvaluacion")!=null){
+				
+	}else if(request.getParameter("GenerarPDFEstado")!=null){
 		response.setContentType("application/pdf");
 		ServletOutputStream out= response.getOutputStream();
 		try{
