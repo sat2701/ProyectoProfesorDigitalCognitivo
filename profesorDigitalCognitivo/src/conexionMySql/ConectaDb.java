@@ -26,6 +26,7 @@ public class ConectaDb {
 	
 	public static void desconectar(){
 		cnn=null;
+		boolean lol=null;
 	}
 
 }
